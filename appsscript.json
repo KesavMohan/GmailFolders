@@ -23,14 +23,7 @@
           "unconditional": {},
           "onTriggerFunction": "getContextualAddOn"
         }
-      ],
-      "composeTrigger": {
-        "selectActions": [
-          {
-            "funcName": "getComposeAddOn"
-          }
-        ]
-      }
+      ]
     }
   },
   "oauthScopes": [

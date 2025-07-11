@@ -288,12 +288,7 @@ function removeSenderColor(e) {
   }
 }
 
-/**
- * Compose trigger function
- */
-function getComposeAddOn(e) {
-  return createWelcomeCard();
-}
+
 
 // Storage functions
 function saveSenderColor(email, colorData) {
