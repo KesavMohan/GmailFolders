@@ -30,13 +30,7 @@
             "funcName": "getComposeAddOn"
           }
         ]
-      },
-      "universalActions": [
-        {
-          "label": "Color Settings",
-          "functionName": "openColorSettings"
-        }
-      ]
+      }
     }
   },
   "oauthScopes": [
