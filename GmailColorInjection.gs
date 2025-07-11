@@ -95,7 +95,8 @@ function createEmailFilter(senderEmail, labelName) {
     
     // Check if filter already exists
     const existingFilters = Gmail.Users.Settings.Filters.list('me');
-    const existingFilter = existingFilters.filter.find(filter => 
+    const filtersArray = existingFilters && existingFilters.filter ? existingFilters.filter : [];
+    const existingFilter = filtersArray.find(filter => 
       filter.criteria.from === senderEmail && 
       filter.action.addLabelIds && 
       filter.action.addLabelIds.includes(label.id)
@@ -147,7 +148,8 @@ function removeColorForSender(senderEmail) {
     if (label) {
       // Remove all filters for this sender
       const filters = Gmail.Users.Settings.Filters.list('me');
-      const senderFilters = filters.filter.filter(filter => 
+      const filtersArray = filters && filters.filter ? filters.filter : [];
+      const senderFilters = filtersArray.filter(filter => 
         filter.criteria.from === senderEmail
       );
       
@@ -217,8 +219,9 @@ function updateGmailColors() {
     
     // Remove all color-related filters
     const filters = Gmail.Users.Settings.Filters.list('me');
-    if (filters.filter) {
-      filters.filter.forEach(filter => {
+    const filtersArray = filters && filters.filter ? filters.filter : [];
+    if (filtersArray.length > 0) {
+      filtersArray.forEach(filter => {
         if (filter.action.addLabelIds) {
           const hasColorLabel = filter.action.addLabelIds.some(labelId => {
             const label = labels.labels.find(l => l.id === labelId);
