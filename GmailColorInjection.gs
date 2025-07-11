@@ -118,19 +118,20 @@ function createEmailFilter(senderEmail, labelName) {
  * Converts hex color to Gmail-compatible color
  */
 function convertHexToGmailColor(hexColor) {
-  // Gmail has specific predefined color options - these are the only allowed values
+  // Gmail has specific predefined color options - these are the ONLY allowed values
   const gmailColors = {
     '#FF6B6B': { backgroundColor: '#fb4c2f', textColor: '#ffffff' }, // Red
-    '#4ECDC4': { backgroundColor: '#16a766', textColor: '#ffffff' }, // Green/Teal
+    '#4ECDC4': { backgroundColor: '#16a766', textColor: '#ffffff' }, // Green
     '#45B7D1': { backgroundColor: '#4a90e2', textColor: '#ffffff' }, // Blue
     '#F9CA24': { backgroundColor: '#f2c960', textColor: '#000000' }, // Yellow
     '#6C5CE7': { backgroundColor: '#a479e2', textColor: '#ffffff' }, // Purple
     '#FFA726': { backgroundColor: '#ffad47', textColor: '#000000' }, // Orange
     '#F8BBD9': { backgroundColor: '#ff7bb3', textColor: '#000000' }, // Pink
-    '#26D0CE': { backgroundColor: '#00d3a7', textColor: '#ffffff' }, // Teal
+    '#26D0CE': { backgroundColor: '#16a766', textColor: '#ffffff' }, // Teal (use same as green)
     '': { backgroundColor: '#e6e6e6', textColor: '#000000' } // Default/Gray
   };
   
+  console.log(`Converting color ${hexColor} to Gmail color:`, gmailColors[hexColor] || gmailColors['']);
   return gmailColors[hexColor] || gmailColors[''];
 }
 
