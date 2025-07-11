@@ -1,0 +1,35 @@
+{
+  "name": "gmail-folder-colors",
+  "version": "1.0.0",
+  "description": "A Gmail add-on that allows users to color-code emails from specific senders",
+  "main": "Code.gs",
+  "scripts": {
+    "deploy": "clasp deploy",
+    "push": "clasp push",
+    "pull": "clasp pull",
+    "open": "clasp open"
+  },
+  "keywords": [
+    "gmail",
+    "google-apps-script",
+    "add-on",
+    "workspace",
+    "email",
+    "organization",
+    "productivity"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@google/clasp": "^2.4.1",
+    "@types/google-apps-script": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/gmail-folder-colors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/gmail-folder-colors/issues"
+  },
+  "homepage": "https://github.com/yourusername/gmail-folder-colors#readme"
+} 
