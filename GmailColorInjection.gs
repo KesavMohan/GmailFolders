@@ -272,13 +272,38 @@ function setupColorTriggers() {
  */
 function setSenderColorWithGmail(e) {
   try {
+    console.log('setSenderColorWithGmail called with parameters:', JSON.stringify(e.parameters));
+    
     // First, set the color in storage (original functionality)
     const result = setSenderColor(e);
     
     // Then apply to Gmail
     const senderEmail = e.parameters.senderEmail;
-    const labelName = `Color: ${senderEmail}`;
     const colorHex = e.parameters.colorHex;
+    
+    // Validate parameters
+    if (!senderEmail) {
+      console.error('senderEmail is undefined or empty');
+      return CardService.newActionResponseBuilder()
+        .setNotification(CardService.newNotification()
+          .setType(CardService.NotificationType.ERROR)
+          .setText('Error: No sender email provided')
+        )
+        .build();
+    }
+    
+    if (!colorHex) {
+      console.error('colorHex is undefined or empty');
+      return CardService.newActionResponseBuilder()
+        .setNotification(CardService.newNotification()
+          .setType(CardService.NotificationType.ERROR)
+          .setText('Error: No color provided')
+        )
+        .build();
+    }
+    
+    const labelName = `Color: ${senderEmail}`;
+    console.log('Creating label:', labelName, 'with color:', colorHex);
     
     // Create/update label
     const gmailColor = convertHexToGmailColor(colorHex);

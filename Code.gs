@@ -21,11 +21,14 @@ const COLOR_PALETTE = [
  */
 function getContextualAddOn(e) {
   try {
+    console.log('getContextualAddOn called with:', JSON.stringify(e.gmail));
+    
     // Get the current message
     const accessToken = e.gmail.accessToken;
     const messageId = e.gmail.messageId;
     
     if (!messageId) {
+      console.log('No messageId found, showing welcome card');
       return createWelcomeCard();
     }
     
@@ -36,12 +39,21 @@ function getContextualAddOn(e) {
     });
     
     if (!message || !message.payload || !message.payload.headers) {
+      console.log('No message payload or headers found, showing welcome card');
       return createWelcomeCard();
     }
     
     // Extract sender email
     const fromHeader = message.payload.headers.find(h => h.name === 'From');
+    console.log('From header found:', fromHeader ? fromHeader.value : 'NOT FOUND');
+    
     const senderEmail = extractEmailFromHeader(fromHeader ? fromHeader.value : '');
+    console.log('Extracted sender email:', senderEmail);
+    
+    if (!senderEmail) {
+      console.error('Could not extract sender email from header');
+      return createErrorCard('Could not identify sender email');
+    }
     
     return createColorPickerCard(senderEmail, messageId);
     
@@ -324,14 +336,36 @@ function deleteSenderColor(email) {
 
 // Utility functions
 function extractEmailFromHeader(fromHeader) {
-  if (!fromHeader) return '';
+  console.log('extractEmailFromHeader called with:', fromHeader);
+  
+  if (!fromHeader) {
+    console.log('fromHeader is empty or undefined');
+    return '';
+  }
   
   // Extract email from "Name <email@domain.com>" format
   const emailMatch = fromHeader.match(/<([^>]+)>/);
   if (emailMatch) {
+    console.log('Email extracted from angle brackets:', emailMatch[1]);
     return emailMatch[1];
   }
   
-  // If no angle brackets, assume the whole thing is an email
-  return fromHeader.trim();
+  // Check if the whole string looks like an email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const trimmedHeader = fromHeader.trim();
+  
+  if (emailRegex.test(trimmedHeader)) {
+    console.log('Email extracted from trimmed header:', trimmedHeader);
+    return trimmedHeader;
+  }
+  
+  // Try to find an email anywhere in the string
+  const emailInString = fromHeader.match(/[^\s@]+@[^\s@]+\.[^\s@]+/);
+  if (emailInString) {
+    console.log('Email found in string:', emailInString[0]);
+    return emailInString[0];
+  }
+  
+  console.log('No email found in header');
+  return '';
 } 
